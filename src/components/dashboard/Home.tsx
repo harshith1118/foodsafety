@@ -1,9 +1,10 @@
 // Home dashboard component
 import React from 'react';
-import { Utensils, Heart, Calendar, TrendingUp, Award, Target } from 'lucide-react';
+import { Utensils, Heart, Calendar, TrendingUp, Award, Target, Leaf, Apple, Dumbbell } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../hooks/useAuth';
+import { useStats } from '../../contexts/StatsContext';
 
 interface HomeProps {
   onNavigate: (tab: string) => void;
@@ -11,6 +12,7 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   const { user } = useAuth();
+  const { stats } = useStats();
   
   const quickActions = [
     {
@@ -39,26 +41,42 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     }
   ];
   
-  const stats = [
-    { label: 'Foods Analyzed', value: '247', icon: TrendingUp, color: 'purple' },
-    { label: 'Health Queries', value: '18', icon: Heart, color: 'red' },
-    { label: 'Routines Planned', value: '12', icon: Calendar, color: 'blue' },
-    { label: 'Nutrition Score', value: '85%', icon: Award, color: 'emerald' }
+  const statsData = [
+    { label: 'Foods Analyzed', value: stats.foodsAnalyzed.toString(), icon: TrendingUp, color: 'purple' },
+    { label: 'Health Queries', value: stats.healthQueries.toString(), icon: Heart, color: 'red' },
+    { label: 'Routines Planned', value: stats.routinesPlanned.toString(), icon: Calendar, color: 'blue' },
+    { label: 'Nutrition Score', value: `${stats.nutritionScore}%`, icon: Award, color: 'emerald' }
   ];
+  
+  // Get user's first name for greeting
+  const getUserFirstName = () => {
+    if (!user?.name) return 'there';
+    return user.name.split(' ')[0];
+  };
   
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
       <div className="text-center">
-        <div className="w-20 h-20 bg-gradient-to-br from-emerald-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6">
-          <span className="text-3xl">🥗</span>
+        <div className="flex justify-center mb-6">
+          <div className="relative">
+            <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Leaf size={40} className="text-white" />
+            </div>
+            <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
+              <Apple size={20} className="text-white" />
+            </div>
+          </div>
         </div>
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Welcome back, {user?.name}! 🌟
+          {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
+            ? `Welcome to NutriCare, ${getUserFirstName()}! 👋`
+            : `Welcome back, ${getUserFirstName()}! 👋`}
         </h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Ready to discover amazing foods, get health-focused recommendations, 
-          and plan your perfect nutrition routine? Let's make today deliciously healthy! 
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
+            ? "Start your personalized nutrition journey today. Discover foods that fuel your body, support your wellness goals, and taste amazing!"
+            : "Continue your health journey with personalized nutrition insights. Discover foods that fuel your body, support your wellness goals, and taste amazing!"}
         </p>
       </div>
       
@@ -66,20 +84,32 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div className="grid md:grid-cols-3 gap-6">
         {quickActions.map((action, index) => {
           const Icon = action.icon;
+          const colorClasses = {
+            emerald: 'bg-emerald-100 group-hover:bg-emerald-200 text-emerald-600',
+            red: 'bg-red-100 group-hover:bg-red-200 text-red-600',
+            blue: 'bg-blue-100 group-hover:bg-blue-200 text-blue-600'
+          };
+          
           return (
             <Card
               key={index}
               hover
-              className="text-center cursor-pointer group"
+              className="text-center cursor-pointer group flex flex-col h-full border border-gray-200 shadow-sm"
               onClick={action.action}
             >
-              <div className={`w-16 h-16 bg-${action.color}-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                <span className="text-2xl">{action.emoji}</span>
+              <div className={`w-16 h-16 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[0]} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                <Icon size={28} className={colorClasses[action.color as keyof typeof colorClasses].split(' ')[2]} />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">{action.title}</h3>
-              <p className="text-gray-600 mb-4">{action.description}</p>
-              <Button variant="outline" className="w-full">
-                <Icon size={16} className="mr-2" />
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{action.title}</h3>
+              <p className="text-gray-600 mb-4 flex-grow">{action.description}</p>
+              <Button 
+                variant="outline" 
+                className="w-full mt-auto"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  action.action();
+                }}
+              >
                 Get Started
               </Button>
             </Card>
@@ -88,24 +118,34 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </div>
       
       {/* Stats Overview */}
-      <Card>
+      <Card className="border border-gray-200 shadow-sm">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Your NutriCare Journey 📊</h2>
-          <span className="text-sm text-gray-500">All time</span>
+          <h2 className="text-2xl font-bold text-gray-900 flex items-center">
+            <Dumbbell className="mr-3 text-emerald-600" size={28} />
+            Your NutriCare Journey
+          </h2>
+          <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">All time</span>
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {stats.map((stat, index) => {
+          {statsData.map((stat, index) => {
             const Icon = stat.icon;
+            const colorClasses = {
+              purple: 'bg-purple-100 text-purple-600',
+              red: 'bg-red-100 text-red-600',
+              blue: 'bg-blue-100 text-blue-600',
+              emerald: 'bg-emerald-100 text-emerald-600'
+            };
+            
             return (
-              <div key={index} className="text-center">
-                <div className={`w-12 h-12 bg-${stat.color}-100 rounded-full flex items-center justify-center mx-auto mb-3`}>
-                  <Icon size={20} className={`text-${stat.color}-600`} />
+              <div key={index} className="text-center p-4 bg-white rounded-xl border border-gray-100 hover:shadow-sm transition-shadow">
+                <div className={`w-14 h-14 ${colorClasses[stat.color as keyof typeof colorClasses].split(' ')[0]} rounded-xl flex items-center justify-center mx-auto mb-3`}>
+                  <Icon size={24} className={colorClasses[stat.color as keyof typeof colorClasses].split(' ')[1]} />
                 </div>
-                <div className={`text-2xl font-bold text-${stat.color}-600 mb-1`}>
+                <div className={`text-2xl font-bold ${colorClasses[stat.color as keyof typeof colorClasses].split(' ')[1]} mb-1`}>
                   {stat.value}
                 </div>
-                <div className="text-sm text-gray-600">{stat.label}</div>
+                <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
               </div>
             );
           })}
@@ -114,13 +154,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       
       {/* Daily Motivation */}
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200">
+        <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 shadow-sm">
           <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-emerald-200 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-emerald-200 rounded-xl flex items-center justify-center">
               <Target size={24} className="text-emerald-700" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-emerald-900 mb-2">Today's Goal 🎯</h3>
+              <h3 className="text-lg font-bold text-emerald-900 mb-2">Today's Goal 🎯</h3>
               <p className="text-emerald-800 mb-3">
                 Try to learn about one new nutritious food today! Knowledge is the key to better health.
               </p>
@@ -131,13 +171,13 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </Card>
         
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-sm">
           <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-blue-200 rounded-full flex items-center justify-center">
+            <div className="w-12 h-12 bg-blue-200 rounded-xl flex items-center justify-center">
               <Heart size={24} className="text-blue-700" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">Health Tip 💡</h3>
+              <h3 className="text-lg font-bold text-blue-900 mb-2">Health Tip 💡</h3>
               <p className="text-blue-800 mb-3">
                 Remember: Small, consistent changes in your eating habits lead to big improvements in your health!
               </p>
@@ -150,38 +190,31 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </div>
       
       {/* Recent Activity */}
-      <Card>
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Recent Activity 📈</h3>
+      <Card className="border border-gray-200 shadow-sm">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+          <TrendingUp className="mr-2 text-emerald-600" size={24} />
+          Recent Activity
+        </h3>
         <div className="space-y-3">
-          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-            <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
-              <Utensils size={16} className="text-emerald-600" />
+          {stats.lastActivity ? (
+            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-xl">
+              <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <Utensils size={20} className="text-emerald-600" />
+              </div>
+              <div className="flex-1">
+                <p className="text-gray-900 font-medium">{stats.lastActivity}</p>
+                <p className="text-sm text-gray-600">Just now</p>
+              </div>
             </div>
-            <div className="flex-1">
-              <p className="text-gray-900">Analyzed nutrition for "Chicken Breast"</p>
-              <p className="text-sm text-gray-600">2 hours ago</p>
+          ) : (
+            <div className="text-center py-8">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Calendar size={32} className="text-gray-400" />
+              </div>
+              <p className="text-gray-500 font-medium">No recent activity yet</p>
+              <p className="text-gray-400 text-sm mt-1">Start exploring to see your activity here</p>
             </div>
-          </div>
-          
-          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-            <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
-              <Heart size={16} className="text-red-600" />
-            </div>
-            <div className="flex-1">
-              <p className="text-gray-900">Got food recommendations for "Common Cold"</p>
-              <p className="text-sm text-gray-600">Yesterday</p>
-            </div>
-          </div>
-          
-          <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
-            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-              <Calendar size={16} className="text-blue-600" />
-            </div>
-            <div className="flex-1">
-              <p className="text-gray-900">Created daily routine for tomorrow</p>
-              <p className="text-sm text-gray-600">2 days ago</p>
-            </div>
-          </div>
+          )}
         </div>
       </Card>
     </div>

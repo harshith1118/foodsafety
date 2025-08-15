@@ -1,3 +1,112 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom styles for a more professional look */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  @apply bg-gray-50 text-gray-800;
+}
+
+/* Card enhancements */
+.card {
+  @apply bg-white rounded-xl shadow-sm border border-gray-200 transition-all duration-300;
+}
+
+.card-hover {
+  @apply hover:shadow-md hover:border-gray-300;
+}
+
+/* Button enhancements */
+.btn-primary {
+  @apply bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-lg transition-all duration-300 shadow-sm hover:shadow-md;
+}
+
+.btn-secondary {
+  @apply bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-medium rounded-lg transition-all duration-300 shadow-sm hover:shadow-md;
+}
+
+.btn-outline {
+  @apply border-2 border-emerald-500 text-emerald-600 hover:bg-emerald-50 font-medium rounded-lg transition-all duration-300;
+}
+
+/* Input enhancements */
+.input-field {
+  @apply border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-all duration-300;
+}
+
+/* Typography enhancements */
+.heading-1 {
+  @apply text-3xl font-bold text-gray-900;
+}
+
+.heading-2 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.heading-3 {
+  @apply text-xl font-bold text-gray-900;
+}
+
+/* Animation enhancements */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Custom gradient backgrounds */
+.bg-gradient-primary {
+  @apply bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50;
+}
+
+/* Custom shadows */
+.shadow-primary {
+  @apply shadow-sm border border-gray-200;
+}
+
+.shadow-secondary {
+  @apply shadow-md border border-gray-300;
+}
+
+/* Improved text colors for better readability */
+.text-primary {
+  @apply text-gray-900;
+}
+
+.text-secondary {
+  @apply text-gray-700;
+}
+
+.text-tertiary {
+  @apply text-gray-600;
+}
+
+.text-muted {
+  @apply text-gray-500;
+}
+
+/* Focus states for accessibility */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+}

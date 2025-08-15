@@ -1,6 +1,7 @@
 // Navigation bar component
-import React from 'react';
-import { Home, Search, Heart, Calendar, User, LogOut } from 'lucide-react';
+import React, { useState } from 'react';
+import { Home, Search, Heart, Calendar, User } from 'lucide-react';
+import { ProfilePopup } from '../profile/ProfilePopup';
 import { useAuth } from '../../hooks/useAuth';
 
 interface NavbarProps {
@@ -9,7 +10,8 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -18,19 +20,37 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
     { id: 'routine', label: 'Routine', icon: Calendar },
   ];
   
+  // Get user's first name for display
+  const getUserDisplayName = () => {
+    if (!user?.name) return 'User';
+    return user.name.split(' ')[0];
+  };
+  
+  // Get user avatar or default
+  const getUserAvatar = () => {
+    if ((user as any)?.avatar) {
+      return (user as any).avatar;
+    }
+    return null;
+  };
+  
   return (
     <>
       {/* Desktop Navbar */}
-      <nav className="hidden md:flex bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+      <nav className="hidden md:flex bg-white/90 backdrop-blur-sm shadow-sm border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2">
-                <span className="text-2xl">🥗</span>
-                <h1 className="text-xl font-bold text-gray-900">NutriCare</h1>
+              <div className="flex items-center space-x-3">
+                <img 
+                  src="/logos/professional-logo.svg" 
+                  alt="NutriCare Logo" 
+                  className="h-10 w-10 transition-transform duration-300 hover:scale-105"
+                />
+                <h1 className="text-xl font-bold text-gray-900 tracking-tight">NutriCare</h1>
               </div>
               
-              <div className="flex space-x-1">
+              <div className="flex space-x-2">
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (
@@ -38,10 +58,10 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
                       key={item.id}
                       onClick={() => onTabChange(item.id)}
                       className={`
-                        flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200
+                        flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-300
                         ${activeTab === item.id
-                          ? 'bg-emerald-100 text-emerald-700'
-                          : 'text-gray-600 hover:bg-gray-100'
+                          ? 'bg-emerald-500 text-white shadow-md'
+                          : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-600'
                         }
                       `}
                     >
@@ -54,16 +74,18 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             </div>
             
             <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-2">
-                <User size={20} className="text-gray-600" />
-                <span className="text-gray-700">{user?.name}</span>
-              </div>
               <button
-                onClick={logout}
-                className="flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition-colors"
+                onClick={() => setIsProfileOpen(true)}
+                className="flex items-center space-x-2 text-gray-600 hover:text-emerald-600 transition-colors duration-300"
               >
-                <LogOut size={18} />
-                <span>Logout</span>
+                <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                  {getUserAvatar() ? (
+                    <span className="text-sm">{getUserAvatar()}</span>
+                  ) : (
+                    <User size={16} className="text-emerald-600" />
+                  )}
+                </div>
+                <span className="text-gray-700 font-medium">{getUserDisplayName()}</span>
               </button>
             </div>
           </div>
@@ -71,8 +93,15 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
       </nav>
       
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
-        <div className="grid grid-cols-4 py-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-gray-200 z-50">
+        <div className="grid grid-cols-5 py-2">
+          <div className="flex items-center justify-center">
+            <img 
+              src="/logos/professional-logo.svg" 
+              alt="NutriCare Logo" 
+              className="h-6 w-6"
+            />
+          </div>
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -80,7 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
                 key={item.id}
                 onClick={() => onTabChange(item.id)}
                 className={`
-                  flex flex-col items-center py-2 px-1 space-y-1 transition-all duration-200
+                  flex flex-col items-center py-2 px-1 space-y-1 transition-all duration-300
                   ${activeTab === item.id
                     ? 'text-emerald-600'
                     : 'text-gray-600'
@@ -94,6 +123,12 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
           })}
         </div>
       </nav>
+      
+      {/* Profile Popup */}
+      <ProfilePopup 
+        isOpen={isProfileOpen} 
+        onClose={() => setIsProfileOpen(false)} 
+      />
     </>
   );
 };

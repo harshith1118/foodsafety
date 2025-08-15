@@ -3,8 +3,9 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  authType: 'email' | 'google' | 'guest';
+  authType: 'email' | 'google';
   preferences?: UserPreferences;
+  createdAt?: string;
 }
 
 export interface UserPreferences {
@@ -77,4 +78,12 @@ export interface ApiResponse<T> {
   data: T;
   success: boolean;
   message?: string;
+}
+
+export interface UserStats {
+  foodsAnalyzed: number;
+  healthQueries: number;
+  routinesPlanned: number;
+  nutritionScore: number;
+  lastActivity?: string;
 }

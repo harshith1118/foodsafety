@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="throat-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Throat silhouette -->
+  <path d="M35 20 Q50 15 65 20 L60 70 Q50 80 40 70 Z" fill="none" stroke="url(#throat-gradient)" stroke-width="4" />
+  
+  <!-- Vocal cords -->
+  <path d="M42 40 Q50 45 58 40" stroke="#7C3AED" stroke-width="3" fill="none" stroke-linecap="round" />
+  <path d="M42 55 Q50 60 58 55" stroke="#7C3AED" stroke-width="3" fill="none" stroke-linecap="round" />
+  
+  <!-- Soothing wave -->
+  <path d="M25 35 Q35 30 45 35 Q55 40 65 35 Q75 30 85 35" stroke="#22C55E" stroke-width="2" fill="none" />
+  <path d="M25 50 Q35 45 45 50 Q55 55 65 50 Q75 45 85 50" stroke="#22C55E" stroke-width="2" fill="none" />
+</svg>

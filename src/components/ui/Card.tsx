@@ -1,7 +1,7 @@
 // Reusable Card component
 import React from 'react';
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
   padding?: 'none' | 'sm' | 'md' | 'lg';
@@ -12,7 +12,9 @@ export const Card: React.FC<CardProps> = ({
   children,
   className = '',
   padding = 'md',
-  hover = false
+  hover = false,
+  onClick,
+  ...props
 }) => {
   const paddings = {
     none: '',
@@ -21,11 +23,15 @@ export const Card: React.FC<CardProps> = ({
     lg: 'p-8'
   };
   
-  const baseClasses = 'bg-white rounded-xl shadow-sm border border-gray-200';
-  const hoverClasses = hover ? 'hover:shadow-md transition-shadow duration-200 cursor-pointer' : '';
+  const baseClasses = 'bg-white rounded-xl shadow-sm border border-gray-200 transition-all duration-200';
+  const hoverClasses = hover ? 'hover:shadow-md hover:border-gray-300 cursor-pointer' : '';
   
   return (
-    <div className={`${baseClasses} ${paddings[padding]} ${hoverClasses} ${className}`}>
+    <div 
+      className={`${baseClasses} ${paddings[padding]} ${hoverClasses} ${className}`}
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </div>
   );

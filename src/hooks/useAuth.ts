@@ -1,15 +1,20 @@
 // Authentication hook
 import { useState, useEffect, createContext, useContext } from 'react';
 import { User } from '../types';
+import { authService } from '../services/AuthService';
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  loginWithGoogle: () => Promise<void>;
-  continueAsGuest: () => void;
+  guestLogin: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
+  updateProfile: (userData: Partial<User>) => Promise<void>;
+  updateGuestProfile: (name: string, avatar?: string) => Promise<void>;
+  forgotPassword: (email: string) => Promise<void>;
+  resetPassword: (email: string, token: string, newPassword: string) => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,7 +27,7 @@ export const useAuth = () => {
   return context;
 };
 
-// Mock authentication service
+// Authentication logic with proper service integration
 export const useAuthLogic = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,7 +36,12 @@ export const useAuthLogic = () => {
     // Check for existing session
     const savedUser = localStorage.getItem('nutricare_user');
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (error) {
+        console.error('Failed to parse saved user:', error);
+        localStorage.removeItem('nutricare_user');
+      }
     }
     setIsLoading(false);
   }, []);
@@ -39,65 +49,43 @@ export const useAuthLogic = () => {
   const login = async (email: string, password: string) => {
     setIsLoading(true);
     
-    // Mock login delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    const mockUser: User = {
-      id: '1',
-      name: email.split('@')[0],
-      email,
-      authType: 'email'
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('nutricare_user', JSON.stringify(mockUser));
-    setIsLoading(false);
+    try {
+      const user = await authService.login(email, password);
+      setUser(user);
+      localStorage.setItem('nutricare_user', JSON.stringify(user));
+    } catch (error: any) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const loginWithGoogle = async () => {
+  const guestLogin = async () => {
     setIsLoading(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    const mockUser: User = {
-      id: '2',
-      name: 'Google User',
-      email: 'user@gmail.com',
-      authType: 'google'
-    };
-    
-    setUser(mockUser);
-    localStorage.setItem('nutricare_user', JSON.stringify(mockUser));
-    setIsLoading(false);
-  };
-
-  const continueAsGuest = () => {
-    const guestUser: User = {
-      id: 'guest',
-      name: 'Guest User',
-      email: '',
-      authType: 'guest'
-    };
-    
-    setUser(guestUser);
-    localStorage.setItem('nutricare_user', JSON.stringify(guestUser));
+    try {
+      const user = await authService.guestLogin();
+      setUser(user);
+      localStorage.setItem('nutricare_user', JSON.stringify(user));
+    } catch (error: any) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const register = async (name: string, email: string, password: string) => {
     setIsLoading(true);
     
-    await new Promise(resolve => setTimeout(resolve, 1200));
-    
-    const newUser: User = {
-      id: Date.now().toString(),
-      name,
-      email,
-      authType: 'email'
-    };
-    
-    setUser(newUser);
-    localStorage.setItem('nutricare_user', JSON.stringify(newUser));
-    setIsLoading(false);
+    try {
+      const user = await authService.register(name, email, password);
+      setUser(user);
+      localStorage.setItem('nutricare_user', JSON.stringify(user));
+    } catch (error: any) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logout = () => {
@@ -105,14 +93,74 @@ export const useAuthLogic = () => {
     localStorage.removeItem('nutricare_user');
   };
 
+  const updateProfile = async (userData: Partial<User>) => {
+    if (!user) {
+      throw new Error('No user logged in');
+    }
+    
+    try {
+      const updatedUser = await authService.updateProfile(user.email, userData);
+      setUser(updatedUser);
+      localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const updateGuestProfile = async (name: string, avatar?: string) => {
+    if (!user || user.authType !== 'guest') {
+      throw new Error('No guest user logged in');
+    }
+    
+    try {
+      const updatedUser = await authService.updateGuestProfile(user.email, name, avatar);
+      setUser(updatedUser);
+      localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const forgotPassword = async (email: string) => {
+    try {
+      await authService.forgotPassword(email);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const resetPassword = async (email: string, token: string, newPassword: string) => {
+    try {
+      await authService.resetPassword(email, token, newPassword);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
+  const changePassword = async (currentPassword: string, newPassword: string) => {
+    if (!user) {
+      throw new Error('No user logged in');
+    }
+    
+    try {
+      await authService.changePassword(user.email, currentPassword, newPassword);
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
   return {
     user,
     isLoading,
     login,
-    loginWithGoogle,
-    continueAsGuest,
+    guestLogin,
     register,
-    logout
+    logout,
+    updateProfile,
+    updateGuestProfile,
+    forgotPassword,
+    resetPassword,
+    changePassword
   };
 };
 

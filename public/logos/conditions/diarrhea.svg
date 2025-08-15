@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="diarrhea-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Water droplet -->
+  <path d="M50 15 Q70 30 65 60 Q50 85 35 60 Q30 30 50 15" fill="url(#diarrhea-gradient)" />
+  
+  <!-- Droplet highlight -->
+  <path d="M45 25 Q55 30 52 45 Q45 55 40 45 Q38 30 45 25" fill="#FFFFFF" opacity="0.5" />
+  
+  <!-- Protective shield -->
+  <path d="M50 10 L70 25 L65 65 L50 85 L35 65 L30 25 Z" fill="none" stroke="#22C55E" stroke-width="3" />
+</svg>
