@@ -1,6 +1,6 @@
 // Food details display component
 import React from 'react';
-import { ArrowLeft, AlertTriangle, Info, Target, Scale } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Info, Target, Scale, Apple } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { FoodItem } from '../../types';
@@ -11,6 +11,7 @@ interface FoodDetailsProps {
 }
 
 export const FoodDetails: React.FC<FoodDetailsProps> = ({ food, onBack }) => {
+  console.log('FoodDetails component rendered with food:', food);
   // Filter out nutrients with zero values to avoid showing empty data
   const macronutrients = [
     { name: 'Calories', value: food.calories, unit: 'kcal', color: 'text-purple-600' },

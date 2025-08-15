@@ -30,7 +30,9 @@ function App() {
   const { user } = authValue;
   
   const handleFoodSelected = (food: FoodItem) => {
+    console.log('handleFoodSelected called with:', food);
     setSelectedFood(food);
+    console.log('selectedFood state set to:', food);
   };
   
   const handleBackToSearch = () => {
@@ -63,10 +65,13 @@ function App() {
   };
   
   const renderContent = () => {
+    console.log('renderContent called, activeTab:', activeTab, 'selectedFood:', selectedFood);
     if (activeTab === 'food') {
       if (selectedFood) {
+        console.log('Rendering FoodDetails component');
         return <FoodDetails food={selectedFood} onBack={handleBackToSearch} />;
       }
+      console.log('Rendering FoodSearch component');
       return <FoodSearch onFoodSelected={handleFoodSelected} />;
     }
     

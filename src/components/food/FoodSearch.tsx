@@ -450,6 +450,8 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                     variant="primary" 
                     size="lg" 
                     onClick={() => {
+                      console.log('View Detailed Nutrition Analysis button clicked');
+                      console.log('Food data:', food);
                       incrementFoodsAnalyzed();
                       updateLastActivity(`Analyzed nutrition for "${food.name}"`);
                       onFoodSelected(food);
