@@ -165,12 +165,12 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <Search className="text-emerald-600" size={24} />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Search className="text-emerald-600" size={20} />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900">Search by Name</h3>
-                <p className="text-gray-600">Discover nutrition facts for any food</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Search by Name</h3>
+                <p className="text-gray-600 text-sm md:text-base">Discover nutrition facts for any food</p>
               </div>
             </div>
             
@@ -188,7 +188,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
               <Button 
                 onClick={() => handleTextSearch()} 
                 isLoading={isLoading}
-                className="px-6 py-2"
+                className="px-4 py-2 md:px-6 md:py-2"
                 size="lg"
               >
                 Search
@@ -324,17 +324,17 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
       {/* Search Results */}
       {searchResults.length > 0 && (
         <Card className="border-2 border-emerald-100 bg-gradient-to-br from-white to-emerald-50">
-          <div className="flex justify-between items-center mb-6">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-emerald-500 text-white rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-emerald-500 text-white rounded-lg flex items-center justify-center text-sm">
                 1
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-gray-900">Food Information Found!</h3>
-                <p className="text-gray-600">Detailed nutrition analysis</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Food Information Found!</h3>
+                <p className="text-gray-600 text-sm">Detailed nutrition analysis</p>
               </div>
             </div>
-            <Button variant="ghost" size="sm" onClick={clearResults}>
+            <Button variant="ghost" size="sm" onClick={clearResults} className="self-start sm:self-auto">
               <X size={16} className="mr-1" />
               Clear
             </Button>
@@ -348,14 +348,14 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 className="border-2 border-emerald-200 bg-white shadow-sm"
               >
                 <div className="text-center mb-6">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-2">{food.name}</h4>
-                  <div className="text-xl font-bold text-emerald-600 bg-emerald-50 py-2 px-4 rounded-lg inline-block">
+                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{food.name}</h4>
+                  <div className="text-lg md:text-xl font-bold text-emerald-600 bg-emerald-50 py-2 px-4 rounded-lg inline-block">
                     {food.calories} calories per {food.servingSize}
                   </div>
                 </div>
                 
                 {/* Detailed Nutrition Information */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
                   {/* Macronutrients */}
                   <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
                     <h5 className="font-bold text-blue-800 text-lg mb-3 flex items-center">
@@ -434,7 +434,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                     <span className="bg-emerald-500 text-white rounded-lg w-6 h-6 flex items-center justify-center mr-2 text-sm">⭐</span>
                     Nutrition Highlights
                   </h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="grid grid-cols-1 gap-2">
                     {getNutritionHighlights(food).map((highlight, index) => (
                       <div key={index} className="flex items-start">
                         <span className="text-emerald-500 mr-2">•</span>
@@ -456,7 +456,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                       updateLastActivity(`Analyzed nutrition for "${food.name}"`);
                       onFoodSelected(food);
                     }}
-                    className="px-8 py-3 text-lg font-semibold"
+                    className="w-full sm:w-auto px-4 py-3 md:px-8 md:py-3 text-base md:text-lg font-semibold"
                   >
                     View Detailed Nutrition Analysis
                   </Button>

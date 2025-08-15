@@ -82,7 +82,7 @@ export const FoodDetails: React.FC<FoodDetailsProps> = ({ food, onBack }) => {
       
       {/* Food Header */}
       <Card>
-        <div className="md:flex md:items-start md:space-x-6">
+        <div className="flex flex-col md:flex-row md:items-start md:space-x-6">
           {food.imageUrl ? (
             <div className="md:w-1/3 mb-4 md:mb-0">
               <img
@@ -91,7 +91,7 @@ export const FoodDetails: React.FC<FoodDetailsProps> = ({ food, onBack }) => {
                 className="w-full h-48 md:h-64 object-cover rounded-lg"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
-                  target.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9IiNmM2Y0ZjYiIHN0cm9rZT0iI2QxZDNkNSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJmZWF0aGVyIGZlYXRoZXItaW1hZ2UiPjxwYXRoIGQ9Ik01LjUyIDUuNTdsMTIuOTYgMTIuOTZNMjEgMTJjMCA0Ljk3LTEwIDEyLTEwIDEycy0xMC03LjAzLTEwLTEyYzAtNC45NyA0LjAzLTkgOS05IDQuOTYgMCA5IDQuMDMgOSA5eiI+PC9wYXRoPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiPjwvY2lyY2xlPjwvc3ZnPg==';
+                  target.parentElement?.parentElement?.classList.add('hidden');
                 }}
               />
             </div>
@@ -103,33 +103,33 @@ export const FoodDetails: React.FC<FoodDetailsProps> = ({ food, onBack }) => {
             </div>
           )}
           
-          <div className="md:flex-1">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{food.name}</h1>
-            <div className="bg-emerald-50 rounded-lg p-4 mb-4">
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{food.name}</h1>
+            <div className="bg-emerald-50 rounded-lg p-3 md:p-4 mb-4">
               <div className="flex items-center mb-2">
-                <Info size={20} className="text-emerald-600 mr-2" />
+                <Info size={16} className="text-emerald-600 mr-2" />
                 <span className="font-medium text-emerald-900">Serving Size</span>
               </div>
-              <p className="text-emerald-800">{food.servingSize}</p>
+              <p className="text-emerald-800 text-sm md:text-base">{food.servingSize}</p>
             </div>
             
-            <div className="text-4xl font-bold text-purple-600 mb-2">
-              {food.calories} <span className="text-lg text-gray-600">calories</span>
+            <div className="text-3xl md:text-4xl font-bold text-purple-600 mb-2">
+              {food.calories} <span className="text-base md:text-lg text-gray-600">calories</span>
             </div>
           </div>
         </div>
       </Card>
       
       {/* Nutritional Information */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
         {nutrientCategories.map((category) => (
           <Card key={category.title}>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">{category.title}</h2>
-            <div className="space-y-3">
+            <h2 className="text-lg md:text-xl font-semibold text-gray-900 mb-3 md:mb-4">{category.title}</h2>
+            <div className="space-y-2 md:space-y-3">
               {category.nutrients.map((nutrient, index) => (
                 <div key={index} className="flex justify-between items-center">
-                  <span className="text-gray-700">{nutrient.name}</span>
-                  <span className={`font-semibold ${nutrient.color}`}>
+                  <span className="text-gray-700 text-sm md:text-base">{nutrient.name}</span>
+                  <span className={`font-semibold ${nutrient.color} text-sm md:text-base`}>
                     {nutrient.value.toFixed(1)}{nutrient.unit}
                   </span>
                 </div>
