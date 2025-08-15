@@ -60,12 +60,11 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div className="text-center">
         <div className="flex justify-center mb-6">
           <div className="relative">
-            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Leaf size={32} className="md:size-40 text-white" />
-            </div>
-            <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-amber-500 rounded-full p-1 md:p-2 shadow-md">
-              <Apple size={16} className="md:size-20 text-white" />
-            </div>
+            <img 
+              src="/logos/main-logo.svg" 
+              alt="NutriCare Logo" 
+              className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg"
+            />
           </div>
         </div>
         <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -154,10 +153,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       
       {/* Daily Motivation */}
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="bg-gradient-to-br from-emerald-50 to-emerald-100 border-emerald-200 shadow-sm">
+        <Card className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 shadow-sm">
           <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-emerald-200 rounded-xl flex items-center justify-center">
-              <Target size={24} className="text-emerald-700" />
+            <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center">
+              <Target size={24} className="text-white" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-emerald-900 mb-2">Today's Goal 🎯</h3>
@@ -171,10 +170,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
         </Card>
         
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200 shadow-sm">
+        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm">
           <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-blue-200 rounded-xl flex items-center justify-center">
-              <Heart size={24} className="text-blue-700" />
+            <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+              <Heart size={24} className="text-white" />
             </div>
             <div>
               <h3 className="text-lg font-bold text-blue-900 mb-2">Health Tip 💡</h3>

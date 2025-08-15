@@ -165,8 +165,8 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Search className="text-emerald-600" size={20} />
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                <Search className="text-white" size={20} />
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">Search by Name</h3>

@@ -188,12 +188,11 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
       <div className="text-center mb-8">
         <div className="flex justify-center mb-4">
           <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <img src="/logos/navbar-logo.svg" alt="NutriCare Logo" className="w-12 h-12" />
-            </div>
-            <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
-              <span className="text-white text-xs">✨</span>
-            </div>
+            <img 
+              src="/logos/main-logo.svg" 
+              alt="NutriCare Logo" 
+              className="w-20 h-20 rounded-2xl shadow-lg"
+            />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
@@ -296,12 +295,11 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
       <div className="text-center mb-8">
         <div className="flex justify-center mb-4">
           <div className="relative">
-            <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <img src="/logos/navbar-logo.svg" alt="NutriCare Logo" className="w-12 h-12" />
-            </div>
-            <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
-              <span className="text-white text-xs">✨</span>
-            </div>
+            <img 
+              src="/logos/main-logo.svg" 
+              alt="NutriCare Logo" 
+              className="w-20 h-20 rounded-2xl shadow-lg"
+            />
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Your Account</h1>

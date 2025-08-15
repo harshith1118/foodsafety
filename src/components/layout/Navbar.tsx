@@ -43,11 +43,11 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
                 <img 
-                  src="/logos/professional-logo.svg" 
+                  src="/logos/navbar-logo.svg" 
                   alt="NutriCare Logo" 
-                  className="h-10 w-10 transition-transform duration-300 hover:scale-105"
+                  className="h-8 w-8 md:h-10 md:w-10 transition-transform duration-300 hover:scale-105"
                 />
-                <h1 className="text-xl font-bold text-gray-900 tracking-tight">NutriCare</h1>
+                <h1 className="text-lg md:text-xl font-bold text-gray-900 tracking-tight hidden sm:block">NutriCare</h1>
               </div>
               
               <div className="flex space-x-2">
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
         <div className="grid grid-cols-5 py-2">
           <div className="flex items-center justify-center">
             <img 
-              src="/logos/professional-logo.svg" 
+              src="/logos/navbar-logo.svg" 
               alt="NutriCare Logo" 
               className="h-6 w-6"
             />
