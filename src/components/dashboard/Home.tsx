@@ -61,7 +61,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="flex justify-center mb-6">
           <div className="relative">
             <img 
-              src="/logos/main-logo.svg" 
+              src="/logos/new-logo.svg" 
               alt="NutriCare Logo" 
               className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg"
             />

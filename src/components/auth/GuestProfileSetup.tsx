@@ -76,15 +76,11 @@ export const GuestProfileSetup: React.FC<GuestProfileSetupProps> = ({ onProfileC
         </div>
         
         <div className="text-center mb-6">
-          <div className="flex justify-center mb-4">
-            <div className="relative">
-              <img 
-                src="/logos/main-logo.svg" 
+          <img 
+                src="/logos/new-logo.svg" 
                 alt="NutriCare Logo" 
-                className="w-20 h-20 rounded-2xl shadow-lg"
+                className="w-16 h-16 mx-auto"
               />
-            </div>
-          </div>
           <p className="text-gray-700 font-medium">Personalize your experience</p>
         </div>
         

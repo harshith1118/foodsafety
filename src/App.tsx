@@ -47,26 +47,9 @@ function App() {
   };
   
   // Handle Guest login
-  const handleGuestLogin = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setAuthError(null);
-    setSuccessMessage(null);
-    
-    try {
-      await guestLogin();
-      // Check if it's a guest user who needs profile setup
-      if (user?.authType === 'guest' && user.name === 'Guest') {
-        setNeedsProfileSetup(true);
-      } else {
-        onGuestLogin();
-      }
-    } catch (error: any) {
-      console.error('Guest login error:', error);
-      setAuthError(error.message || 'Guest login failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
+  const handleGuestLogin = async () => {
+    // Always show profile setup for guest users
+    setNeedsProfileSetup(true);
   };
   
   const handleProfileComplete = () => {

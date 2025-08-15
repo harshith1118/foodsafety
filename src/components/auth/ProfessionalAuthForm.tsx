@@ -189,7 +189,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
         <div className="flex justify-center mb-4">
           <div className="relative">
             <img 
-              src="/logos/main-logo.svg" 
+              src="/logos/new-logo.svg" 
               alt="NutriCare Logo" 
               className="w-20 h-20 rounded-2xl shadow-lg"
             />
@@ -296,7 +296,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
         <div className="flex justify-center mb-4">
           <div className="relative">
             <img 
-              src="/logos/main-logo.svg" 
+              src="/logos/new-logo.svg" 
               alt="NutriCare Logo" 
               className="w-20 h-20 rounded-2xl shadow-lg"
             />

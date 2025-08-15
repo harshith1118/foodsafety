@@ -84,7 +84,7 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
           <div className="flex justify-center mb-4">
             <div className="relative">
               <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <img src="/logos/professional-logo.svg" alt="NutriCare Logo" className="w-12 h-12" />
+                <img src="/logos/new-logo.svg" alt="NutriCare Logo" className="w-12 h-12" />
               </div>
               <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
                 <span className="text-white text-xs">✨</span>

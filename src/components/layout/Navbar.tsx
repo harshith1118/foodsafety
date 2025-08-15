@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
                 <img 
-                  src="/logos/navbar-logo.svg" 
+                  src="/logos/new-logo.svg" 
                   alt="NutriCare Logo" 
                   className="h-8 w-8 md:h-10 md:w-10 transition-transform duration-300 hover:scale-105"
                 />
@@ -95,13 +95,16 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-t border-gray-200 z-50">
         <div className="grid grid-cols-5 py-2">
-          <div className="flex items-center justify-center">
+          <button 
+            onClick={() => setIsProfileOpen(true)}
+            className="flex items-center justify-center"
+          >
             <img 
-              src="/logos/navbar-logo.svg" 
+              src="/logos/new-logo.svg" 
               alt="NutriCare Logo" 
               className="h-6 w-6"
             />
-          </div>
+          </button>
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
