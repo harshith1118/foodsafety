@@ -147,6 +147,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
     
     try {
       await guestLogin();
+      // Always show profile setup for guest users
       onGuestLogin();
     } catch (error: any) {
       console.error('Guest login error:', error);

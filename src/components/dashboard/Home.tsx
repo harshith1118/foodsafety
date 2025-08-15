@@ -60,20 +60,20 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <div className="text-center">
         <div className="flex justify-center mb-6">
           <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Leaf size={40} className="text-white" />
+            <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Leaf size={32} className="md:size-40 text-white" />
             </div>
-            <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
-              <Apple size={20} className="text-white" />
+            <div className="absolute -bottom-1 -right-1 md:-bottom-2 md:-right-2 bg-amber-500 rounded-full p-1 md:p-2 shadow-md">
+              <Apple size={16} className="md:size-20 text-white" />
             </div>
           </div>
         </div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+        <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
           {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
             ? `Welcome to NutriCare, ${getUserFirstName()}! 👋`
             : `Welcome back, ${getUserFirstName()}! 👋`}
         </h1>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
           {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
             ? "Start your personalized nutrition journey today. Discover foods that fuel your body, support your wellness goals, and taste amazing!"
             : "Continue your health journey with personalized nutrition insights. Discover foods that fuel your body, support your wellness goals, and taste amazing!"}
@@ -81,7 +81,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       </div>
       
       {/* Quick Actions */}
-      <div className="grid md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {quickActions.map((action, index) => {
           const Icon = action.icon;
           const colorClasses = {
@@ -97,11 +97,11 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
               className="text-center cursor-pointer group flex flex-col h-full border border-gray-200 shadow-sm"
               onClick={action.action}
             >
-              <div className={`w-16 h-16 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[0]} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                <Icon size={28} className={colorClasses[action.color as keyof typeof colorClasses].split(' ')[2]} />
+              <div className={`w-14 h-14 md:w-16 md:h-16 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[0]} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                <Icon size={24} className={`md:size-28 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[2]}`} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{action.title}</h3>
-              <p className="text-gray-600 mb-4 flex-grow">{action.description}</p>
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{action.title}</h3>
+              <p className="text-sm md:text-base text-gray-600 mb-4 flex-grow">{action.description}</p>
               <Button 
                 variant="outline" 
                 className="w-full mt-auto"

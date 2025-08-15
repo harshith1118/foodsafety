@@ -378,7 +378,7 @@ export const HealthConditions: React.FC = () => {
                 </span>
               </div>
               
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                 <Input
                   placeholder="Describe how you're feeling... (e.g., upset stomach, body aches, etc.)"
                   value={customCondition}
@@ -387,7 +387,7 @@ export const HealthConditions: React.FC = () => {
                   icon={<Search size={20} />}
                   className="flex-1"
                 />
-                <Button onClick={handleCustomCondition} isLoading={isLoading} size="lg">
+                <Button onClick={handleCustomCondition} isLoading={isLoading} size="lg" className="w-full sm:w-auto">
                   Get Suggestions
                 </Button>
               </div>
