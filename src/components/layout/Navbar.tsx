@@ -28,8 +28,8 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
   
   // Get user avatar or default
   const getUserAvatar = () => {
-    if ((user as any)?.avatar) {
-      return (user as any).avatar;
+    if (user && (user as User & { avatar?: string }).avatar) {
+      return (user as User & { avatar?: string }).avatar;
     }
     return null;
   };
@@ -43,7 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
                 <img 
-                  src="/logos/new-logo.svg" 
+                  src="/logos/vibrant-navbar-logo.svg" 
                   alt="NutriCare Logo" 
                   className="h-8 w-8 md:h-10 md:w-10 transition-transform duration-300 hover:scale-105"
                 />
@@ -100,7 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, onTabChange }) => {
             className="flex items-center justify-center"
           >
             <img 
-              src="/logos/new-logo.svg" 
+              src="/logos/vibrant-navbar-logo.svg" 
               alt="NutriCare Logo" 
               className="h-6 w-6"
             />

@@ -1,12 +1,10 @@
 // Guest Profile Setup Component
 import React, { useState } from 'react';
-import { User, UserPreferences } from '../types';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card } from '../ui/Card';
 import { useAuth } from '../../hooks/useAuth';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 interface GuestProfileSetupProps {
   onProfileComplete: () => void;
@@ -20,11 +18,11 @@ const DEFAULT_AVATARS = [
 
 export const GuestProfileSetup: React.FC<GuestProfileSetupProps> = ({ onProfileComplete, onBackToLogin }) => {
   const { user, updateGuestProfile } = useAuth();
-  const [name, setName] = useState(user?.name || '');
+  // For guest users, leave the name field empty for them to enter their preferred name
+  const [name, setName] = useState(user?.authType === 'guest' ? '' : (user?.name || ''));
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -49,9 +47,9 @@ export const GuestProfileSetup: React.FC<GuestProfileSetupProps> = ({ onProfileC
     try {
       await updateGuestProfile(name, selectedAvatar || undefined);
       onProfileComplete();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Profile update error:', error);
-      setErrors({ submit: error.message || 'Failed to update profile. Please try again.' });
+      setErrors({ submit: (error as Error).message || 'Failed to update profile. Please try again.' });
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +75,7 @@ export const GuestProfileSetup: React.FC<GuestProfileSetupProps> = ({ onProfileC
         
         <div className="text-center mb-6">
           <img 
-                src="/logos/new-logo.svg" 
+                src="/logos/vibrant-main-logo.svg" 
                 alt="NutriCare Logo" 
                 className="w-16 h-16 mx-auto"
               />

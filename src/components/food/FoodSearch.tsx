@@ -1,6 +1,6 @@
 // Food search component with text entry approach
 // Food search component with text entry approach
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Search, X, AlertTriangle } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
@@ -15,6 +15,7 @@ interface FoodSearchProps {
 
 export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [submittedSearchQuery, setSubmittedSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<FoodItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -121,6 +122,9 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
       return;
     }
     
+    // Set the submitted search query for display in results
+    setSubmittedSearchQuery(searchQueryToUse);
+    
     setIsLoading(true);
     setError(null);
     setSearchResults([]);
@@ -141,7 +145,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
         console.log('❌ [DEBUG] Search failed with message:', response.message);
         setError(response.message || 'No foods found. Try searching for something else.');
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('❌ [DEBUG] Search threw exception:', error);
       setError('Failed to search for foods. Please try again.');
     } finally {
@@ -165,8 +169,8 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
         <div className="space-y-6">
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500 rounded-xl flex items-center justify-center flex-shrink-0">
-                <Search className="text-white" size={20} />
+              <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+                <Search className="text-white" size={32} />
               </div>
               <div>
                 <h3 className="text-xl md:text-2xl font-bold text-gray-900">Search by Name</h3>
@@ -330,8 +334,8 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 1
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Food Information Found!</h3>
-                <p className="text-gray-600 text-sm">Detailed nutrition analysis</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{submittedSearchQuery}</h3>
+                <p className="text-gray-600 text-sm">Search results</p>
               </div>
             </div>
             <Button variant="ghost" size="sm" onClick={clearResults} className="self-start sm:self-auto">
@@ -342,13 +346,13 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
           
           <div className="space-y-6">
             {searchResults.slice(0, 1).map((food) => (
-              <Card
+                                          <Card
                 key={food.id}
                 padding="lg"
                 className="border-2 border-emerald-200 bg-white shadow-sm"
               >
                 <div className="text-center mb-6">
-                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{food.name}</h4>
+                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{submittedSearchQuery}</h4>
                   <div className="text-lg md:text-xl font-bold text-emerald-600 bg-emerald-50 py-2 px-4 rounded-lg inline-block">
                     {food.calories} calories per {food.servingSize}
                   </div>
@@ -393,7 +397,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                         <span className="bg-purple-500 text-white rounded-lg w-6 h-6 flex items-center justify-center mr-2 text-sm">V</span>
                         Key Vitamins
                       </h5>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {Object.entries(food.nutrients.vitamins).length > 0 ? (
                           Object.entries(food.nutrients.vitamins).map(([vitamin, amount]) => (
                             <div key={vitamin} className="flex justify-between items-center bg-white bg-opacity-50 rounded-lg p-2">
@@ -412,7 +416,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                         <span className="bg-orange-500 text-white rounded-lg w-6 h-6 flex items-center justify-center mr-2 text-sm">M</span>
                         Key Minerals
                       </h5>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {Object.entries(food.nutrients.minerals).length > 0 ? (
                           Object.entries(food.nutrients.minerals).map(([mineral, amount]) => (
                             <div key={mineral} className="flex justify-between items-center bg-white bg-opacity-50 rounded-lg p-2">
@@ -444,23 +448,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                   </div>
                 </div>
                 
-                {/* Action Button */}
-                <div className="mt-6 text-center">
-                  <Button 
-                    variant="primary" 
-                    size="lg" 
-                    onClick={() => {
-                      console.log('View Detailed Nutrition Analysis button clicked');
-                      console.log('Food data:', food);
-                      incrementFoodsAnalyzed();
-                      updateLastActivity(`Analyzed nutrition for "${food.name}"`);
-                      onFoodSelected(food);
-                    }}
-                    className="w-full sm:w-auto px-4 py-3 md:px-8 md:py-3 text-base md:text-lg font-semibold"
-                  >
-                    View Detailed Nutrition Analysis
-                  </Button>
-                </div>
+                
               </Card>
             ))}
           </div>

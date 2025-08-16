@@ -1,6 +1,6 @@
 // Food details display component
 import React from 'react';
-import { ArrowLeft, AlertTriangle, Info, Target, Scale, Apple } from 'lucide-react';
+import { ArrowLeft, AlertTriangle, Info, Target, Apple } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card } from '../ui/Card';
 import { FoodItem } from '../../types';
@@ -54,22 +54,6 @@ export const FoodDetails: React.FC<FoodDetailsProps> = ({ food, onBack }) => {
       nutrients: minerals
     }
   ].filter(category => category.nutrients.length > 0); // Only show categories that have data
-  
-  // Calculate % of daily values (based on a 2000 calorie diet)
-  const calculateDailyPercentage = (nutrient: string, value: number): number => {
-    const dailyValues: { [key: string]: number } = {
-      'Protein': 50, // grams
-      'Carbohydrates': 300, // grams
-      'Fat': 65, // grams
-      'Fiber': 25, // grams
-      'Sugar': 50, // grams
-      'Sodium': 2300, // mg
-      // Add more as needed
-    };
-    
-    const dailyValue = dailyValues[nutrient] || 100; // default to 100 if not found
-    return Math.round((value / dailyValue) * 100);
-  };
   
   return (
     <div className="space-y-6">

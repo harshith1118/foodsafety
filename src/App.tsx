@@ -1,4 +1,4 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Navigate, useLocation, useSearchParams } from 'react-router-dom';
 import { ProfessionalAuthForm } from './components/auth/ProfessionalAuthForm';
 import { PasswordReset } from './components/auth/PasswordReset';
@@ -6,7 +6,6 @@ import { GuestProfileSetup } from './components/auth/GuestProfileSetup';
 import { Navbar } from './components/layout/Navbar';
 import { Home } from './components/dashboard/Home';
 import { FoodSearch } from './components/food/FoodSearch';
-import { FoodDetails } from './components/food/FoodDetails';
 import { HealthConditions } from './components/health/HealthConditions';
 import { DailyRoutine } from './components/routine/DailyRoutine';
 import { AuthContext, useAuthLogic } from './hooks/useAuth';
@@ -16,32 +15,27 @@ import { FoodItem } from './types';
 // Lazy load components that aren't needed immediately
 // const Home = lazy(() => import('./components/dashboard/Home'));
 // const FoodSearch = lazy(() => import('./components/food/FoodSearch'));
-// const FoodDetails = lazy(() => import('./components/food/FoodDetails'));
 // const HealthConditions = lazy(() => import('./components/health/HealthConditions'));
 // const DailyRoutine = lazy(() => import('./components/routine/DailyRoutine'));
 
 function App() {
   const authValue = useAuthLogic();
   const [activeTab, setActiveTab] = useState('home');
-  const [selectedFood, setSelectedFood] = useState<FoodItem | null>(null);
   const [needsProfileSetup, setNeedsProfileSetup] = useState(false);
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   
   const { user } = authValue;
   
   const handleFoodSelected = (food: FoodItem) => {
     console.log('handleFoodSelected called with:', food);
-    setSelectedFood(food);
-    console.log('selectedFood state set to:', food);
-  };
-  
-  const handleBackToSearch = () => {
-    setSelectedFood(null);
+    // Don't set selectedFood state to prevent navigation to details page
+    console.log('Food selection handled, but not navigating to details page');
   };
   
   const handleAuthSuccess = () => {
     // Check if it's a guest user who needs profile setup
-    if (authValue.user?.authType === 'guest' && authValue.user.name === 'Guest') {
+    if (authValue.user?.authType === 'guest') {
       setNeedsProfileSetup(true);
     }
   };
@@ -66,12 +60,9 @@ function App() {
   };
   
   const renderContent = () => {
-    console.log('renderContent called, activeTab:', activeTab, 'selectedFood:', selectedFood);
+    console.log('renderContent called, activeTab:', activeTab);
     if (activeTab === 'food') {
-      if (selectedFood) {
-        console.log('Rendering FoodDetails component');
-        return <FoodDetails food={selectedFood} onBack={handleBackToSearch} />;
-      }
+      // Always render FoodSearch component, even when food is selected
       console.log('Rendering FoodSearch component');
       return <FoodSearch onFoodSelected={handleFoodSelected} />;
     }
@@ -102,7 +93,6 @@ function App() {
   
   // Check if we're on the password reset page
   if (location.pathname === '/reset-password') {
-    const [searchParams] = useSearchParams();
     const token = searchParams.get('token') || '';
     const email = searchParams.get('email') || '';
     
@@ -132,7 +122,7 @@ function App() {
               user ? (
                 <>
                   <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
-                  <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 pb-24 md:pb-8">
+                  <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 pb-24 md:pb-8">
                     {renderContent()}
                   </main>
                 </>

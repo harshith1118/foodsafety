@@ -1,6 +1,6 @@
 // Home dashboard component
 import React from 'react';
-import { Utensils, Heart, Calendar, TrendingUp, Award, Target, Leaf, Apple, Dumbbell } from 'lucide-react';
+import { Utensils, Heart, Calendar, TrendingUp, Award, Target, Dumbbell } from 'lucide-react';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { useAuth } from '../../hooks/useAuth';
@@ -21,7 +21,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       description: 'Search, snap, or speak to discover nutrition facts',
       action: () => onNavigate('food'),
       color: 'emerald',
-      emoji: '🔍'
+      gradient: 'from-emerald-400 to-teal-500'
     },
     {
       icon: Heart,
@@ -29,7 +29,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       description: 'Get personalized food recommendations for your health',
       action: () => onNavigate('health'),
       color: 'red',
-      emoji: '💊'
+      gradient: 'from-red-400 to-pink-500'
     },
     {
       icon: Calendar,
@@ -37,7 +37,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       description: 'Create a balanced daily food routine',
       action: () => onNavigate('routine'),
       color: 'blue',
-      emoji: '📋'
+      gradient: 'from-blue-400 to-indigo-500'
     }
   ];
   
@@ -61,21 +61,17 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="flex justify-center mb-6">
           <div className="relative">
             <img 
-              src="/logos/new-logo.svg" 
+              src="/logos/vibrant-main-logo.svg" 
               alt="NutriCare Logo" 
-              className="w-20 h-20 md:w-24 md:h-24 rounded-2xl shadow-lg"
+              className="w-16 h-16 rounded-2xl shadow-lg"
             />
           </div>
         </div>
         <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
-          {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
-            ? `Welcome to NutriCare, ${getUserFirstName()}! 👋`
-            : `Welcome back, ${getUserFirstName()}! 👋`}
+          Welcome to NutriCare, {getUserFirstName()}! 👋
         </h1>
         <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-          {stats.foodsAnalyzed === 0 && stats.healthQueries === 0 && stats.routinesPlanned === 0
-            ? "Start your personalized nutrition journey today. Discover foods that fuel your body, support your wellness goals, and taste amazing!"
-            : "Continue your health journey with personalized nutrition insights. Discover foods that fuel your body, support your wellness goals, and taste amazing!"}
+          Start your personalized nutrition journey today. Discover foods that fuel your body, support your wellness goals, and taste amazing!
         </p>
       </div>
       
@@ -84,26 +80,26 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         {quickActions.map((action, index) => {
           const Icon = action.icon;
           const colorClasses = {
-            emerald: 'bg-emerald-100 group-hover:bg-emerald-200 text-emerald-600',
-            red: 'bg-red-100 group-hover:bg-red-200 text-red-600',
-            blue: 'bg-blue-100 group-hover:bg-blue-200 text-blue-600'
+            emerald: 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-emerald-200',
+            red: 'bg-gradient-to-br from-red-400 to-pink-500 text-white shadow-red-200',
+            blue: 'bg-gradient-to-br from-blue-400 to-indigo-500 text-white shadow-blue-200'
           };
           
           return (
             <Card
               key={index}
               hover
-              className="text-center cursor-pointer group flex flex-col h-full border border-gray-200 shadow-sm"
+              className="text-center cursor-pointer group flex flex-col h-full border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300"
               onClick={action.action}
             >
-              <div className={`w-14 h-14 md:w-16 md:h-16 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[0]} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                <Icon size={24} className={`md:size-28 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[2]}`} />
+              <div className={`w-20 h-20 ${colorClasses[action.color as keyof typeof colorClasses].split(' ')[0]} ${action.gradient} rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:scale-110 transition-transform duration-300 shadow-xl`}>
+                <Icon size={36} className="text-white drop-shadow-md" />
               </div>
-              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-2">{action.title}</h3>
-              <p className="text-sm md:text-base text-gray-600 mb-4 flex-grow">{action.description}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{action.title}</h3>
+              <p className="text-base text-gray-700 mb-5 flex-grow px-2">{action.description}</p>
               <Button 
-                variant="outline" 
-                className="w-full mt-auto"
+                variant="primary" 
+                className="w-full mt-auto py-3 font-semibold bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black"
                 onClick={(e) => {
                   e.stopPropagation();
                   action.action();

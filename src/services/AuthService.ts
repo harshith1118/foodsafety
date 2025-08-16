@@ -70,25 +70,21 @@ class AuthService {
       throw new Error(passwordValidation.errors[0]);
     }
     
-    try {
-      // Create user in database
-      const user = userDb.createUser({
-        name: name.trim(),
-        email: email.toLowerCase().trim(),
-        password,
-        authType: 'email',
-        preferences: {
-          dietaryRestrictions: [],
-          allergies: [],
-          healthGoals: [],
-          preferredUnits: 'metric'
-        }
-      });
-      
-      return user;
-    } catch (error) {
-      throw error;
-    }
+    // Create user in database
+    const user = userDb.createUser({
+      name: name.trim(),
+      email: email.toLowerCase().trim(),
+      password,
+      authType: 'email',
+      preferences: {
+        dietaryRestrictions: [],
+        allergies: [],
+        healthGoals: [],
+        preferredUnits: 'metric'
+      }
+    });
+    
+    return user;
   }
   
   // Login user
@@ -119,35 +115,31 @@ class AuthService {
   
   // Guest login - create a temporary guest user
   async guestLogin(): Promise<User> {
-    try {
-      // Generate a simple guest identifier
-      const guestId = `guest_${Date.now()}`;
-      const guestEmail = `${guestId}@nutricare.local`;
-      const guestName = `Guest`;
-      
-      // Check if guest user already exists (shouldn't happen with unique ID)
-      let guestUser = userDb.findUserByEmail(guestEmail);
-      
-      if (!guestUser) {
-        // Create guest user in database
-        guestUser = userDb.createUser({
-          name: guestName,
-          email: guestEmail,
-          password: '', // No password for guest users
-          authType: 'guest',
-          preferences: {
-            dietaryRestrictions: [],
-            allergies: [],
-            healthGoals: [],
-            preferredUnits: 'metric'
-          }
-        });
-      }
-      
-      return guestUser;
-    } catch (error) {
-      throw new Error('Guest login failed. Please try again.');
+    // Generate a simple guest identifier
+    const guestId = `guest_${Date.now()}`;
+    const guestEmail = `${guestId}@nutricare.local`;
+    const guestName = `Guest`;
+    
+    // Check if guest user already exists (shouldn't happen with unique ID)
+    let guestUser = userDb.findUserByEmail(guestEmail);
+    
+    if (!guestUser) {
+      // Create guest user in database
+      guestUser = userDb.createUser({
+        name: guestName,
+        email: guestEmail,
+        password: '', // No password for guest users
+        authType: 'guest',
+        preferences: {
+          dietaryRestrictions: [],
+          allergies: [],
+          healthGoals: [],
+          preferredUnits: 'metric'
+        }
+      });
     }
+    
+    return guestUser;
   }
   
   // Update guest profile
@@ -159,6 +151,7 @@ class AuthService {
       });
       return updatedUser;
     } catch (error) {
+      console.error('Failed to update guest profile:', error);
       throw new Error('Failed to update guest profile. Please try again.');
     }
   }
@@ -182,8 +175,8 @@ class AuthService {
     }
     
     // Generate a secure reset token
-    const resetToken = Math.random().toString(36).substring(2, 15) + 
-                      Math.random().toString(36).substring(2, 15);
+    // const resetToken = Math.random().toString(36).substring(2, 15) + 
+    //                   Math.random().toString(36).substring(2, 15);
     
     // In a production app, you would save the token with expiration time in a database
     // For now, we'll just log it (commented out for performance)

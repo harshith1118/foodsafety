@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="8" cy="8" r="7" fill="white" stroke="#059669" stroke-width="1"/>
+  
+  <!-- Simplified leaf shape -->
+  <path d="M8 3 C 6 3, 4 5, 4 8 C 4 11, 6 13, 8 14 C 10 13, 12 11, 12 8 C 12 5, 10 3, 8 3 Z" 
+        fill="url(#leafGradient)" stroke="#047857" stroke-width="1"/>
+  
+  <!-- Letter N -->
+  <path d="M6.5 5 L6.5 11 L7 11 L8.5 8 L8.5 11 L9 11 L9 5 L8.5 5 L7 8 L7 5 Z" 
+        fill="white"/>
+</svg>

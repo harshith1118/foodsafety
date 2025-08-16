@@ -1,14 +1,9 @@
 import axios from 'axios';
 import { FoodItem, HealthCondition, FoodRecommendation, ApiResponse, Nutrients } from '../types';
 
-// Edamam API configuration
-const EDAMAM_APP_ID = 'e09074e6'; // Your actual Edamam App ID
-const EDAMAM_APP_KEY = 'ecffc115019611222022920cc5761988'; // Your actual Edamam App Key
-const EDAMAM_FOOD_DATABASE_URL = 'https://api.edamam.com/api/food-database/v2/parser';
-
 // USDA API configuration (alternative free API)
-const USDA_API_KEY = 'DEMO_KEY'; // USDA demo key - replace with your own for production
-const USDA_FOOD_SEARCH_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
+// const USDA_API_KEY = 'DEMO_KEY'; // USDA demo key - replace with your own for production
+// const USDA_FOOD_SEARCH_URL = 'https://api.nal.usda.gov/fdc/v1/foods/search';
 
 // Mock foods data
 const mockFoods: FoodItem[] = [
@@ -150,7 +145,7 @@ class ApiService {
         return result;
       }
     } catch (error) {
-      console.log('⚠️ [USDA] Failed, trying next API...');
+      console.log('⚠️ [USDA] Failed, trying next API...', error);
     }
     
     // Try Open Food Facts API
@@ -161,7 +156,7 @@ class ApiService {
         return result;
       }
     } catch (error) {
-      console.log('⚠️ [OpenFoodFacts] Failed, using fallback...');
+      console.log('⚠️ [OpenFoodFacts] Failed, using fallback...', error);
     }
     
     // Final fallback to comprehensive mock data for common foods
@@ -216,7 +211,7 @@ class ApiService {
             };
             
             let calories = 0;
-            let servingSize = '100g';
+            const servingSize = '100g';
             
             // Process all nutrients
             if (Array.isArray(food.foodNutrients)) {
@@ -286,8 +281,6 @@ class ApiService {
                   nutrients.minerals['Phosphorus'] = value;
                 } else if (nutrientName.includes('Potassium')) {
                   nutrients.minerals['Potassium'] = value;
-                } else if (nutrientName.includes('Sodium') && !nutrients.sodium) {
-                  nutrients.sodium = value;
                 } else if (nutrientName.includes('Zinc')) {
                   nutrients.minerals['Zinc'] = value;
                 } else if (nutrientName.includes('Copper')) {
@@ -343,12 +336,12 @@ class ApiService {
           };
         }
       }
-    } catch (error: any) {
-      if (error.response && error.response.status === 429) {
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response && error.response.status === 429) {
         console.log('⚠️ [USDA] Rate limit exceeded, will try other APIs');
         throw new Error('Rate limit exceeded');
       }
-      console.error('❌ [USDA] API Error:', error.message);
+      console.error('❌ [USDA] API Error:', (error as Error).message);
       throw error;
     }
     
@@ -518,8 +511,8 @@ class ApiService {
           };
         }
       }
-    } catch (error: any) {
-      console.error('❌ [OpenFoodFacts] API Error:', error.message);
+    } catch (error) {
+      console.error('❌ [OpenFoodFacts] API Error:', (error as Error).message);
     }
     
     return {
@@ -785,7 +778,7 @@ class ApiService {
         return {
           success: true,
           data: [foodItem],
-          message: `Showing results for \"${foodItem.name}\" (comprehensive mock data)`
+          message: `Showing results for "${foodItem.name}" (comprehensive mock data)`
         };
       }
     }
@@ -815,7 +808,7 @@ class ApiService {
     return {
       success: true,
       data: mockFoodsResult,
-      message: `Showing results for \"${query}\" (comprehensive mock data)`
+      message: `Showing results for "${query}" (comprehensive mock data)`
     };
   }
   
@@ -849,8 +842,8 @@ class ApiService {
         data: {} as FoodItem,
         message: 'Detailed nutrition data not available for this food item.'
       };
-    } catch (error: any) {
-      if (error.message === 'Request timeout') {
+    } catch (error) {
+      if ((error as Error).message === 'Request timeout') {
         return {
           success: false,
           data: {} as FoodItem,
@@ -884,8 +877,8 @@ class ApiService {
         data: mockConditions,
         message: 'Health conditions loaded successfully!'
       };
-    } catch (error: any) {
-      if (error.message === 'Request timeout') {
+    } catch (error) {
+      if ((error as Error).message === 'Request timeout') {
         return {
           success: false,
           data: [],
@@ -1204,8 +1197,8 @@ class ApiService {
         data: recommendations,
         message: 'Food recommendations generated successfully!'
       };
-    } catch (error: any) {
-      if (error.message === 'Request timeout') {
+    } catch (error) {
+      if ((error as Error).message === 'Request timeout') {
         return {
           success: false,
           data: [],

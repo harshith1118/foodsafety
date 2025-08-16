@@ -96,9 +96,9 @@ export const PasswordReset: React.FC<PasswordResetProps> = ({ onBackToLogin, tok
     try {
       await resetPassword(email, token, formData.password);
       setResetSuccess(true);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Password reset error:', error);
-      setAuthError(error.message || 'Password reset failed. Please try again.');
+      setAuthError((error as Error).message || 'Password reset failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

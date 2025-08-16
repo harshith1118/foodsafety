@@ -1,6 +1,6 @@
 // Professional authentication form component
 import React, { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff, ArrowLeft, Key } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card } from '../ui/Card';
@@ -130,7 +130,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
       }
       
       onSuccess();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Auth error:', error);
       setAuthError(error.message || 'Authentication failed. Please try again.');
     } finally {
@@ -149,7 +149,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
       await guestLogin();
       // Always show profile setup for guest users
       onGuestLogin();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Guest login error:', error);
       setAuthError(error.message || 'Guest login failed. Please try again.');
     } finally {
@@ -189,14 +189,14 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
         <div className="flex justify-center mb-4">
           <div className="relative">
             <img 
-              src="/logos/new-logo.svg" 
+              src="/logos/vibrant-main-logo.svg" 
               alt="NutriCare Logo" 
               className="w-20 h-20 rounded-2xl shadow-lg"
             />
           </div>
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-        <p className="text-gray-700 font-medium">Sign in to continue your nutrition journey</p>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Welcome to NutriCare</h1>
+        <p className="text-gray-700 font-medium">Sign in to start your nutrition journey</p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -296,7 +296,7 @@ export const ProfessionalAuthForm: React.FC<ProfessionalAuthFormProps> = ({ onSu
         <div className="flex justify-center mb-4">
           <div className="relative">
             <img 
-              src="/logos/new-logo.svg" 
+              src="/logos/vibrant-main-logo.svg" 
               alt="NutriCare Logo" 
               className="w-20 h-20 rounded-2xl shadow-lg"
             />

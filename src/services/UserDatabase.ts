@@ -16,13 +16,13 @@ class UserDatabase {
   }
   
   // Get all users
-  getUsers(): Record<string, any> {
+  getUsers(): Record<string, User & { password: string; createdAt: string }> {
     const users = localStorage.getItem(this.dbName);
     return users ? JSON.parse(users) : {};
   }
   
   // Save users to database
-  saveUsers(users: Record<string, any>): void {
+  saveUsers(users: Record<string, User & { password: string; createdAt: string }>): void {
     localStorage.setItem(this.dbName, JSON.stringify(users));
   }
   
@@ -39,7 +39,7 @@ class UserDatabase {
     email: string; 
     password: string; 
     authType: 'email' | 'google'; 
-    preferences?: any 
+    preferences?: UserPreferences 
   }): User {
     const users = this.getUsers();
     const email = userData.email.toLowerCase();
@@ -50,7 +50,7 @@ class UserDatabase {
     }
     
     // Create user object
-    const newUser: any = {
+    const newUser = {
       id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       name: userData.name,
       email: email,
@@ -70,7 +70,8 @@ class UserDatabase {
     this.saveUsers(users);
     
     // Return user without password
-    const { password, ...userWithoutPassword } = newUser;
+    const userWithoutPassword = { ...newUser };
+    delete userWithoutPassword.password;
     return userWithoutPassword as User;
   }
   
@@ -88,12 +89,13 @@ class UserDatabase {
       ...users[userEmail],
       ...userData,
       updatedAt: new Date().toISOString()
-    };
+    } as User & { password: string; createdAt: string; updatedAt: string };
     
     this.saveUsers(users);
     
     // Return updated user without password
-    const { password, ...userWithoutPassword } = users[userEmail];
+    const userWithoutPassword = { ...users[userEmail] };
+    delete userWithoutPassword.password;
     return userWithoutPassword as User;
   }
   

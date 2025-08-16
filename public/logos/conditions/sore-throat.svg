@@ -1,19 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="throat-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#A78BFA" />
-      <stop offset="100%" stop-color="#7C3AED" />
+    <linearGradient id="throatGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171" />
+      <stop offset="100%" stop-color="#dc2626" />
     </linearGradient>
   </defs>
   
-  <!-- Throat silhouette -->
-  <path d="M35 20 Q50 15 65 20 L60 70 Q50 80 40 70 Z" fill="none" stroke="url(#throat-gradient)" stroke-width="4" />
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
   
-  <!-- Vocal cords -->
-  <path d="M42 40 Q50 45 58 40" stroke="#7C3AED" stroke-width="3" fill="none" stroke-linecap="round" />
-  <path d="M42 55 Q50 60 58 55" stroke="#7C3AED" stroke-width="3" fill="none" stroke-linecap="round" />
+  <!-- Throat area -->
+  <ellipse cx="50" cy="55" rx="15" ry="25" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
   
-  <!-- Soothing wave -->
-  <path d="M25 35 Q35 30 45 35 Q55 40 65 35 Q75 30 85 35" stroke="#22C55E" stroke-width="2" fill="none" />
-  <path d="M25 50 Q35 45 45 50 Q55 55 65 50 Q75 45 85 50" stroke="#22C55E" stroke-width="2" fill="none" />
+  <!-- Inflamed areas -->
+  <circle cx="42" cy="45" r="4" fill="url(#throatGradient)"/>
+  <circle cx="58" cy="50" r="5" fill="url(#throatGradient)"/>
+  <circle cx="45" cy="65" r="3" fill="url(#throatGradient)"/>
+  
+  <!-- Pain waves -->
+  <path d="M25 35 Q 30 30, 35 35" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <path d="M25 45 Q 30 40, 35 45" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <path d="M65 35 Q 70 30, 75 35" fill="none" stroke="#dc2626" stroke-width="2"/>
+  <path d="M65 45 Q 70 40, 75 45" fill="none" stroke="#dc2626" stroke-width="2"/>
+  
+  <!-- Healing symbol (cross) -->
+  <line x1="45" y1="25" x2="55" y2="25" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+  <line x1="50" y1="20" x2="50" y2="30" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
 </svg>

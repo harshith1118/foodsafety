@@ -53,8 +53,6 @@ export const useAuthLogic = () => {
       const user = await authService.login(email, password);
       setUser(user);
       localStorage.setItem('nutricare_user', JSON.stringify(user));
-    } catch (error: any) {
-      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -67,8 +65,6 @@ export const useAuthLogic = () => {
       const user = await authService.guestLogin();
       setUser(user);
       localStorage.setItem('nutricare_user', JSON.stringify(user));
-    } catch (error: any) {
-      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -81,8 +77,6 @@ export const useAuthLogic = () => {
       const user = await authService.register(name, email, password);
       setUser(user);
       localStorage.setItem('nutricare_user', JSON.stringify(user));
-    } catch (error: any) {
-      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -98,13 +92,9 @@ export const useAuthLogic = () => {
       throw new Error('No user logged in');
     }
     
-    try {
-      const updatedUser = await authService.updateProfile(user.email, userData);
-      setUser(updatedUser);
-      localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
-    } catch (error: any) {
-      throw error;
-    }
+    const updatedUser = await authService.updateProfile(user.email, userData);
+    setUser(updatedUser);
+    localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
   };
 
   const updateGuestProfile = async (name: string, avatar?: string) => {
@@ -112,29 +102,17 @@ export const useAuthLogic = () => {
       throw new Error('No guest user logged in');
     }
     
-    try {
-      const updatedUser = await authService.updateGuestProfile(user.email, name, avatar);
-      setUser(updatedUser);
-      localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
-    } catch (error: any) {
-      throw error;
-    }
+    const updatedUser = await authService.updateGuestProfile(user.email, name, avatar);
+    setUser(updatedUser);
+    localStorage.setItem('nutricare_user', JSON.stringify(updatedUser));
   };
 
   const forgotPassword = async (email: string) => {
-    try {
-      await authService.forgotPassword(email);
-    } catch (error: any) {
-      throw error;
-    }
+    await authService.forgotPassword(email);
   };
 
   const resetPassword = async (email: string, token: string, newPassword: string) => {
-    try {
-      await authService.resetPassword(email, token, newPassword);
-    } catch (error: any) {
-      throw error;
-    }
+    await authService.resetPassword(email, token, newPassword);
   };
 
   const changePassword = async (currentPassword: string, newPassword: string) => {
@@ -142,11 +120,7 @@ export const useAuthLogic = () => {
       throw new Error('No user logged in');
     }
     
-    try {
-      await authService.changePassword(user.email, currentPassword, newPassword);
-    } catch (error: any) {
-      throw error;
-    }
+    await authService.changePassword(user.email, currentPassword, newPassword);
   };
 
   return {

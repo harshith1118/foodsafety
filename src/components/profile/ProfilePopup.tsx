@@ -1,6 +1,6 @@
 // User profile popup component
 import React, { useState } from 'react';
-import { X, User, Mail, Calendar, Shield, Edit3, ArrowLeft } from 'lucide-react';
+import { X, User, Mail, Calendar, Shield, Edit3 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card } from '../ui/Card';
@@ -17,7 +17,7 @@ export const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose }) =
   const [editData, setEditData] = useState({
     name: user?.name || '',
     email: user?.email || '',
-    avatar: (user as any)?.avatar || ''
+    avatar: (user as User & { avatar?: string })?.avatar || ''
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -89,8 +89,8 @@ export const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose }) =
 
   // Get user avatar or default
   const getUserAvatar = () => {
-    if ((user as any)?.avatar) {
-      return (user as any).avatar;
+    if (user && (user as User & { avatar?: string })?.avatar) {
+      return (user as User & { avatar?: string }).avatar;
     }
     return '👤';
   };
@@ -204,7 +204,7 @@ export const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose }) =
                     setEditData({
                       name: user?.name || '',
                       email: user?.email || '',
-                      avatar: (user as any)?.avatar || ''
+                      avatar: (user as User & { avatar?: string })?.avatar || ''
                     });
                     setIsEditing(true);
                   }}
@@ -250,7 +250,7 @@ export const ProfilePopup: React.FC<ProfilePopupProps> = ({ isOpen, onClose }) =
                       setEditData({
                         name: user?.name || '',
                         email: user?.email || '',
-                        avatar: (user as any)?.avatar || ''
+                        avatar: (user as User & { avatar?: string })?.avatar || ''
                       });
                       setIsEditing(true);
                     }}

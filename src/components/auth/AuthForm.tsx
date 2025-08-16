@@ -59,9 +59,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
         await register(formData.name, formData.email, formData.password);
       }
       onSuccess();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Auth error:', error);
-      setAuthError(error.message || 'Authentication failed. Please try again.');
+      setAuthError((error as Error).message || 'Authentication failed. Please try again.');
     }
   };
   
@@ -71,9 +71,9 @@ export const AuthForm: React.FC<AuthFormProps> = ({ onSuccess }) => {
       setAuthError(null);
       await loginWithGoogle();
       onSuccess();
-    } catch (error: any) {
+    } catch (error) {
       console.error('Google login error:', error);
-      setAuthError(error.message || 'Google login failed. Please try again.');
+      setAuthError((error as Error).message || 'Google login failed. Please try again.');
     }
   };
   

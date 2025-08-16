@@ -149,17 +149,17 @@ export const HealthConditions: React.FC = () => {
   if (selectedCondition) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-              <Heart size={24} className="text-red-500" />
+            <div className="w-16 h-16 bg-gradient-to-br from-red-400 to-pink-500 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg">
+              <Pill size={32} className="text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">{selectedCondition.name}</h2>
-              <p className="text-gray-700">Personalized food recommendations</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{selectedCondition.name}</h2>
+              <p className="text-gray-700 text-sm sm:text-base">Personalized food recommendations</p>
             </div>
           </div>
-          <Button variant="ghost" onClick={resetView}>
+          <Button variant="ghost" onClick={resetView} className="self-start sm:self-auto">
             <X size={16} className="mr-2" />
             Back to Conditions
           </Button>
@@ -283,36 +283,36 @@ export const HealthConditions: React.FC = () => {
   }
   
   return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <div className="flex justify-center mb-6">
-          <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-red-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <Stethoscope size={40} className="text-white" />
-            </div>
-            <div className="absolute -bottom-2 -right-2 bg-amber-500 rounded-full p-2 shadow-md">
-              <Shield size={20} className="text-white" />
-            </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <div className="flex justify-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-lg">
+            <Stethoscope size={32} className="text-white" />
           </div>
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">Not Feeling Well? We're Here to Help 💚</h2>
-        <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-          Discover healing foods tailored to your condition. 
-          Just tell us what's bothering you, and we'll suggest comforting, nutritious options!
-        </p>
+        <div className="space-y-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            Feeling Under the Weather?
+          </h1>
+          <p className="text-gray-700 max-w-2xl mx-auto">
+            We've got your back with gentle, nourishing food suggestions that can help you feel better. 
+            Let's find some comforting options together! 💚
+          </p>
+        </div>
       </div>
       
       {/* Common Conditions */}
-      <Card className="border-2 border-gray-200 shadow-sm">
-        <div className="flex items-center space-x-3 mb-6">
+      <Card className="border-2 border-gray-200 shadow-sm p-6">
+        <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left space-x-0 sm:space-x-3 gap-4 sm:gap-0 mb-6">
           <div className="bg-emerald-100 p-3 rounded-xl">
             <Zap className="text-emerald-600" size={24} />
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900">
               Common Conditions
             </h3>
-            <p className="text-gray-700">Just pick what matches your symptoms</p>
+            <p className="text-gray-700 text-sm sm:text-base">Just pick what matches your symptoms</p>
           </div>
         </div>
         
@@ -324,13 +324,13 @@ export const HealthConditions: React.FC = () => {
               <button
                 key={condition.id}
                 onClick={() => handleConditionSelect(condition)}
-                className="flex items-start p-5 rounded-xl hover:bg-gray-50 transition-all duration-300 text-left w-full border border-gray-100 hover:border-emerald-200 hover:shadow-sm"
+                className="flex items-start p-6 rounded-xl hover:bg-gray-50 transition-all duration-300 text-left w-full border border-gray-100 hover:border-emerald-200 hover:shadow-md"
               >
                 <div className="flex-shrink-0 mt-1 p-3 bg-gray-100 rounded-xl">
                   {getConditionIcon(condition.name)}
                 </div>
                 <div className="ml-4 flex-1 min-w-0">
-                  <h4 className="font-bold text-gray-900 text-lg mb-1">
+                  <h4 className="font-bold text-gray-900 text-lg mb-2">
                     {condition.name}
                   </h4>
                   <p className="text-gray-700 text-sm">{condition.description}</p>
@@ -345,16 +345,16 @@ export const HealthConditions: React.FC = () => {
       </Card>
       
       {/* Custom Condition */}
-      <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 shadow-sm">
-        <div className="flex items-start space-x-4">
+      <Card className="bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-start space-x-0 sm:space-x-4 gap-4 sm:gap-0">
           <div className="bg-purple-100 rounded-xl p-3 flex-shrink-0">
-            <span className="text-purple-600 text-2xl">💬</span>
+            <span className="text-2xl">💬</span>
           </div>
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
               Can't find what you're looking for?
             </h3>
-            <p className="text-gray-800 mb-4">
+            <p className="text-gray-800 mb-5">
               No worries! Just tell me how you're feeling in your own words, and I'll suggest some 
               comforting foods that might help. I'm here to support you! 💚
             </p>
@@ -387,7 +387,7 @@ export const HealthConditions: React.FC = () => {
                   icon={<Search size={20} />}
                   className="flex-1"
                 />
-                <Button onClick={handleCustomCondition} isLoading={isLoading} size="lg" className="w-full sm:w-auto">
+                <Button onClick={handleCustomCondition} isLoading={isLoading} className="w-full sm:w-auto">
                   Get Suggestions
                 </Button>
               </div>
@@ -401,30 +401,22 @@ export const HealthConditions: React.FC = () => {
       </Card>
       
       {/* Encouragement */}
-      <Card className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 shadow-sm">
-        <div className="flex items-start space-x-4">
+      <Card className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 shadow-sm p-6">
+        <div className="flex flex-col sm:flex-row sm:items-start space-x-0 sm:space-x-4 gap-4 sm:gap-0">
           <div className="bg-emerald-100 rounded-xl p-3 flex-shrink-0">
             <span className="text-2xl">🌈</span>
           </div>
           <div>
-            <h3 className="text-lg font-bold text-gray-900 mb-2">
-              You're Going to Feel Better Soon!
+            <h3 className="text-lg sm:text-lg font-bold text-gray-900 mb-3">
+              Remember, You're Doing Great! 🌟
             </h3>
-            <p className="text-gray-800">
-              Remember, good nutrition is one of the best medicines. Take care of yourself with love, 
-              stay hydrated, and get plenty of rest. You've got this! 💚
+            <p className="text-gray-800 mb-3">
+              Taking care of yourself is an act of self-love. Every small step you take toward feeling 
+              better matters. You're stronger than you know, and brighter days are ahead! 💪✨
             </p>
-            <div className="flex flex-wrap gap-2 mt-3">
-              <span className="bg-white bg-opacity-70 text-emerald-800 text-xs px-3 py-1 rounded-full">
-                💧 Drink water
-              </span>
-              <span className="bg-white bg-opacity-70 text-emerald-800 text-xs px-3 py-1 rounded-full">
-                😴 Get rest
-              </span>
-              <span className="bg-white bg-opacity-70 text-emerald-800 text-xs px-3 py-1 rounded-full">
-                🌿 Eat well
-              </span>
-            </div>
+            <p className="text-gray-700 text-sm italic">
+              "The best doctor is sunshine, sleep, and love." - Unknown
+            </p>
           </div>
         </div>
       </Card>

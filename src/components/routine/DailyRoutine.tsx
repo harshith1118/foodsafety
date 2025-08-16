@@ -199,8 +199,8 @@ export const DailyRoutine: React.FC = () => {
       </div>
       
       {/* Date Selector and Goals */}
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border border-gray-200 shadow-sm">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="border border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200 p-6">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
               <Calendar size={20} className="text-blue-600" />
@@ -218,16 +218,16 @@ export const DailyRoutine: React.FC = () => {
           </p>
         </Card>
         
-        <Card className="border border-gray-200 shadow-sm">
+        <Card className="border border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200 p-6">
           <div className="flex items-center space-x-3 mb-4">
             <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
               <span className="text-purple-600 text-xl">🎯</span>
             </div>
             <h3 className="text-lg font-bold text-gray-900">Daily Goals</h3>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-700 mb-1">Calories</label>
+              <label className="block text-xs text-gray-700 mb-2">Calories</label>
               <Input
                 type="number"
                 value={goals.calories}
@@ -236,7 +236,7 @@ export const DailyRoutine: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-700 mb-1">Protein (g)</label>
+              <label className="block text-xs text-gray-700 mb-2">Protein (g)</label>
               <Input
                 type="number"
                 value={goals.protein}
@@ -245,7 +245,7 @@ export const DailyRoutine: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-700 mb-1">Carbs (g)</label>
+              <label className="block text-xs text-gray-700 mb-2">Carbs (g)</label>
               <Input
                 type="number"
                 value={goals.carbs}
@@ -311,10 +311,10 @@ export const DailyRoutine: React.FC = () => {
       </Card>
       
       {/* Meal Planning */}
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-4xl mx-auto">
         {meals.map((meal, mealIndex) => (
-          <Card key={meal.type} className="border border-gray-200 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+          <Card key={meal.type} className="border border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-200 p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
               <div className="flex items-center space-x-3">
                 <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center">
                   {mealIcons[meal.type]}
@@ -341,11 +341,11 @@ export const DailyRoutine: React.FC = () => {
             </div>
             
             {/* Add Food Form */}
-            <div className="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
-              <h4 className="font-bold text-gray-900 mb-3">Add Food</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="bg-gray-50 p-5 rounded-xl mb-5 border border-gray-200">
+              <h4 className="font-bold text-gray-900 mb-4">Add Food</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-800 mb-1">Food Name</label>
+                  <label className="block text-sm text-gray-800 mb-2">Food Name</label>
                   <Input
                     type="text"
                     value={newFood.name}
@@ -359,7 +359,7 @@ export const DailyRoutine: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-800 mb-1">Calories</label>
+                  <label className="block text-sm text-gray-800 mb-2">Calories</label>
                   <Input
                     type="number"
                     value={newFood.calories}
@@ -368,7 +368,7 @@ export const DailyRoutine: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-800 mb-1">Protein (g)</label>
+                  <label className="block text-sm text-gray-800 mb-2">Protein (g)</label>
                   <Input
                     type="number"
                     value={newFood.protein}
@@ -377,7 +377,7 @@ export const DailyRoutine: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-800 mb-1">Carbs (g)</label>
+                  <label className="block text-sm text-gray-800 mb-2">Carbs (g)</label>
                   <Input
                     type="number"
                     value={newFood.carbs}
@@ -386,7 +386,7 @@ export const DailyRoutine: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-800 mb-1">Fat (g)</label>
+                  <label className="block text-sm text-gray-800 mb-2">Fat (g)</label>
                   <Input
                     type="number"
                     value={newFood.fat}
@@ -395,7 +395,7 @@ export const DailyRoutine: React.FC = () => {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-800 mb-1">Serving Size (optional)</label>
+                  <label className="block text-sm text-gray-800 mb-2">Serving Size (optional)</label>
                   <Input
                     type="text"
                     value={newFood.servingSize}
@@ -420,9 +420,9 @@ export const DailyRoutine: React.FC = () => {
             {/* Foods in this meal */}
             <div className="space-y-3 mb-4">
               {meal.foods.map((food) => (
-                <div key={food.id} className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm">
-                  <div className="flex-1">
-                    <h4 className="font-bold text-gray-900">{food.name}</h4>
+                <div key={food.id} className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-bold text-gray-900 truncate">{food.name}</h4>
                     <div className="flex flex-wrap gap-2 mt-2">
                       {food.calories > 0 && (
                         <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
@@ -453,10 +453,10 @@ export const DailyRoutine: React.FC = () => {
                   </div>
                   <button
                     onClick={() => removeFoodFromMeal(mealIndex, food.id)}
-                    className="text-gray-500 hover:text-red-500 ml-2 flex-shrink-0 p-1"
+                    className="text-gray-500 hover:text-red-500 ml-3 flex-shrink-0 p-2"
                     aria-label="Remove food"
                   >
-                    <X size={16} />
+                    <X size={18} />
                   </button>
                 </div>
               ))}
