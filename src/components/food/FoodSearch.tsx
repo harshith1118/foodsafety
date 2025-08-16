@@ -137,6 +137,9 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
       if (response.success) {
         console.log('✅ [DEBUG] Search successful, data length:', response.data.length);
         setSearchResults(response.data);
+        // Update last activity when search is successful
+        updateLastActivity(`Searched for "${searchQueryToUse}"`);
+        incrementFoodsAnalyzed();
         // Show a message if we're using demo data
         if (response.message && response.message.includes('demo data')) {
           setError('Showing demo data. For more accurate results, try searching for specific food products.');
