@@ -28,14 +28,18 @@ interface StatsProviderProps {
 
 export const StatsProvider: React.FC<StatsProviderProps> = ({ children }) => {
   const { user } = useAuth();
-  const [stats, setStats] = useState<UserStats>({
+  const [loading, setLoading] = useState(true);
+
+  // Initialize stats with default values
+  const getDefaultStats = (): UserStats => ({
     foodsAnalyzed: 0,
     healthQueries: 0,
     routinesPlanned: 0,
     nutritionScore: 75,
     lastActivity: undefined
   });
-  const [loading, setLoading] = useState(true);
+
+  const [stats, setStats] = useState<UserStats>(getDefaultStats());
 
   // Load stats from localStorage on component mount
   useEffect(() => {
@@ -43,7 +47,17 @@ export const StatsProvider: React.FC<StatsProviderProps> = ({ children }) => {
       const savedStats = localStorage.getItem(`nutricare_stats_${user.id}`);
       if (savedStats) {
         setStats(JSON.parse(savedStats));
+      } else {
+        // For new users, initialize with fresh stats
+        const freshStats = getDefaultStats();
+        setStats(freshStats);
+        // Save fresh stats to localStorage for this user
+        localStorage.setItem(`nutricare_stats_${user.id}`, JSON.stringify(freshStats));
       }
+      setLoading(false);
+    } else {
+      // No user, reset to default stats
+      setStats(getDefaultStats());
       setLoading(false);
     }
   }, [user]);
