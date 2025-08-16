@@ -18,7 +18,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     {
       icon: Utensils,
       title: 'Find Food Info',
-      description: 'Search, snap, or speak to discover nutrition facts',
+      description: 'Search to discover nutrition facts',
       action: () => onNavigate('food'),
       color: 'emerald',
       gradient: 'from-emerald-400 to-teal-500'
