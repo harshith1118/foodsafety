@@ -21,6 +21,13 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
   const [error, setError] = useState<string | null>(null);
   const { incrementFoodsAnalyzed, updateLastActivity } = useStats();
   
+  // Helper method to convert text to title case
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, (txt) => 
+      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+  };
+  
   // Helper method to get nutrition highlights
   const getNutritionHighlights = (food: FoodItem) => {
     const highlights: string[] = [];
@@ -337,8 +344,8 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 1
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{submittedSearchQuery}</h3>
-                <p className="text-gray-600 text-sm">Search Results</p>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{toTitleCase(submittedSearchQuery)}</h3>
+                <p className="text-gray-600 text-sm">Search results</p>
               </div>
             </div>
             <Button variant="ghost" size="sm" onClick={clearResults} className="self-start sm:self-auto">
