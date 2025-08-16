@@ -369,7 +369,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 </div>
                 
                 {/* Detailed Nutrition Information */}
-                <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4 md:gap-6 lg:grid-cols-3">
                   {/* Macronutrients */}
                   <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
                     <h5 className="font-bold text-blue-800 text-lg mb-3 flex items-center">
@@ -401,7 +401,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                   </div>
                   
                   {/* Vitamins & Minerals */}
-                  <div className="space-y-4">
+                  <div className="space-y-4 lg:col-span-2">
                     <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
                       <h5 className="font-bold text-purple-800 text-lg mb-3 flex items-center">
                         <span className="bg-purple-500 text-white rounded-lg w-6 h-6 flex items-center justify-center mr-2 text-sm">V</span>
