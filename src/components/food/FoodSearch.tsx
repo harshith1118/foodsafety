@@ -21,6 +21,13 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
   const [error, setError] = useState<string | null>(null);
   const { incrementFoodsAnalyzed, updateLastActivity } = useStats();
   
+  // Helper method to convert text to title case
+  const toTitleCase = (str: string) => {
+    return str.replace(/\w\S*/g, (txt) => 
+      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+  };
+  
   // Helper method to get nutrition highlights
   const getNutritionHighlights = (food: FoodItem) => {
     const highlights: string[] = [];
@@ -337,7 +344,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 1
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{submittedSearchQuery}</h3>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{toTitleCase(submittedSearchQuery)}</h3>
                 <p className="text-gray-600 text-sm">Search results</p>
               </div>
             </div>
@@ -355,7 +362,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 className="border-2 border-emerald-200 bg-white shadow-sm"
               >
                 <div className="text-center mb-6">
-                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{submittedSearchQuery}</h4>
+                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{toTitleCase(submittedSearchQuery)}</h4>
                   <div className="text-lg md:text-xl font-bold text-emerald-600 bg-emerald-50 py-2 px-4 rounded-lg inline-block">
                     {food.calories} calories per {food.servingSize}
                   </div>
