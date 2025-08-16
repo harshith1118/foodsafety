@@ -344,7 +344,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 1
               </div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{toTitleCase(submittedSearchQuery)}</h3>
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">{submittedSearchQuery}</h3>
                 <p className="text-gray-600 text-sm">Search Results</p>
               </div>
             </div>
