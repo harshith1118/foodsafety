@@ -362,7 +362,7 @@ export const FoodSearch: React.FC<FoodSearchProps> = ({ onFoodSelected }) => {
                 className="border-2 border-emerald-200 bg-white shadow-sm"
               >
                 <div className="text-center mb-6">
-                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{submittedSearchQuery}</h4>
+                  <h4 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">{toTitleCase(submittedSearchQuery)}</h4>
                   <div className="text-lg md:text-xl font-bold text-emerald-600 bg-emerald-50 py-2 px-4 rounded-lg inline-block">
                     {food.calories} calories per {food.servingSize}
                   </div>
